@@ -1,18 +1,26 @@
 # BLOG
 
-pom ÎÄ¼ş¿ÉÄÜÊÇ´íÎóµÄ£¬
-ÒòÎªÕâ¸öÏîÄ¿Ö»ÊÇÆÕÍ¨µÄDynamic Web Project£¬
-ÎªÁËÌá½»ÎÒÁÙÊ±¸ÄÎªÁËMaven µ«ÊÇÒòÎª±¾µØjar°ü²»¹»£¬ÏÂÔØÊ±Ò»Ö±³ö´í£¬
-ËùÒÔÎÒÒ²Ã»ÓĞ²âÊÔ¡£¡£¡£
+pom æ–‡ä»¶å¯èƒ½æ˜¯é”™è¯¯çš„ï¼Œ
+å› ä¸ºè¿™ä¸ªé¡¹ç›®åªæ˜¯æ™®é€šçš„Dynamic Web Projectï¼Œ
+ä¸ºäº†æäº¤æˆ‘ä¸´æ—¶æ”¹ä¸ºäº†Maven ä½†æ˜¯å› ä¸ºæœ¬åœ°jaråŒ…ä¸å¤Ÿï¼Œä¸‹è½½æ—¶ä¸€ç›´å‡ºé”™ï¼Œ
+æ‰€ä»¥æˆ‘ä¹Ÿæ²¡æœ‰æµ‹è¯•ã€‚ã€‚ã€‚
 
-Èç¹ûĞèÒªjar°ü£¬µØÖ·ÔÚ£ºhttp://pan.baidu.com/s/1pL7296r
-Èç¹ûÊ§Ğ§£¬¿ÉÒÔQQ£º460297026  ÎÒ·¢¸øÄã¡£¡£
+å¦‚æœéœ€è¦jaråŒ…ï¼Œåœ°å€åœ¨ï¼šhttp://pan.baidu.com/s/1pL7296r
+å¦‚æœå¤±æ•ˆï¼Œå¯ä»¥QQï¼š460297026  æˆ‘å‘ç»™ä½ ã€‚ã€‚
 
 ------
 
-# ¹¦ÄÜ
+# åŠŸèƒ½
 
-ÆäÊµ¹¦ÄÜ²»ÍêÉÆ£¬ÒòÎª´úÂëÂß¼­µÄÏàËÆĞÔ£¬ËùÒÔÎÒÖ»Íê³ÉÁË´ó²¿·Ö´úÂëµÄ±àĞ´¡£
+å…¶å®åŠŸèƒ½ä¸å®Œå–„ï¼Œå› ä¸ºä»£ç é€»è¾‘çš„ç›¸ä¼¼æ€§ï¼Œæ‰€ä»¥æˆ‘åªå®Œæˆäº†å¤§éƒ¨åˆ†ä»£ç çš„ç¼–å†™ã€‚
 
 # Picture
+![image](https://github.com/dongbow/BLOG/blob/master/pictrue/home.png)
 
+![image](https://github.com/dongbow/BLOG/blob/master/pictrue/blog.png)
+
+![image](https://github.com/dongbow/BLOG/blob/master/pictrue/space.png)
+
+![image](https://github.com/dongbow/BLOG/blob/master/pictrue/search.png)
+
+![image](https://github.com/dongbow/BLOG/blob/master/pictrue/system.png)
