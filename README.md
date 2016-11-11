@@ -15,12 +15,12 @@ pom 文件可能是错误的，
 其实功能不完善，因为代码逻辑的相似性，所以我只完成了大部分代码的编写。
 
 # Picture
-![image](https://github.com/dongbow/BLOG/blob/master/pictrue/home.png)
+![image](https://github.com/dongbow/BLOG/blob/master/picture/home.png)
 
-![image](https://github.com/dongbow/BLOG/blob/master/pictrue/blog.png)
+![image](https://github.com/dongbow/BLOG/blob/master/picture/blog.png)
 
-![image](https://github.com/dongbow/BLOG/blob/master/pictrue/space.png)
+![image](https://github.com/dongbow/BLOG/blob/master/picture/space.png)
 
-![image](https://github.com/dongbow/BLOG/blob/master/pictrue/search.png)
+![image](https://github.com/dongbow/BLOG/blob/master/picture/search.png)
 
-![image](https://github.com/dongbow/BLOG/blob/master/pictrue/system.png)
+![image](https://github.com/dongbow/BLOG/blob/master/picture/system.png)
