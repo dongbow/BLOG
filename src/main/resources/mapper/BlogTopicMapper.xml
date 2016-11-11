@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ifxcode.dao.BlogTopicMapper" >
+
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" >  
+      <property name="timeToIdleSeconds" value="3600"/>
+      <property name="timeToLiveSeconds" value="3600"/>
+      <property name="maxEntriesLocalHeap" value="1000"/>  
+      <property name="maxEntriesLocalDisk" value="10000000"/>  
+      <property name="memoryStoreEvictionPolicy" value="LRU"/>  
+  </cache>
+
+  <resultMap id="BaseResultMap" type="cn.ifxcode.model.BlogTopic" >
+    <id column="bid" property="bid" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="viewcount" property="viewcount" jdbcType="INTEGER" />
+    <result column="replycount" property="replycount" jdbcType="INTEGER" />
+    <result column="praisecount" property="praisecount" jdbcType="INTEGER" />
+    <result column="notpraisecount" property="notpraisecount" jdbcType="INTEGER" />
+    <result column="ishome" property="ishome" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="classify_id" property="classify_id" jdbcType="INTEGER" />
+    <result column="createOrRepost" property="createOrRepost" jdbcType="VARCHAR" />
+    <collection property="blogSigns" ofType="cn.ifxcode.model.BlogSign">
+	    <id column="bsid" property="bsid" jdbcType="INTEGER" />
+	    <result column="bsname" property="bsname" jdbcType="VARCHAR" />
+	    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    </collection>
+    <collection property="blogReplies" ofType="cn.ifxcode.model.BlogReply">
+    	<id column="bg_rid" property="bg_rid" jdbcType="INTEGER" />
+	    <result column="content" property="content" jdbcType="VARCHAR" />
+	    <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
+	    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    </collection>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="cn.ifxcode.model.BlogTopic" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <resultMap type="cn.ifxcode.model.BlogTopic" id="BlogTopicClassifyBlogSign" extends="ResultMapWithBLOBs">
+  	<association property="blogClassify" javaType="cn.ifxcode.model.BlogClassify">
+    	<id column="cid" property="cid" jdbcType="INTEGER"/>
+    	<result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="blogcount" property="blogcount" jdbcType="INTEGER" />
+	    <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
+	    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    </association>
+  </resultMap>
+  <resultMap id="BlogTimeClassifyResultMap" type="cn.ifxcode.vo.BlogTopicTime">
+  	<result column="blogcount" property="blogcount" jdbcType="INTEGER"/>
+  	<result column="timeclassify" property="timeclassify" jdbcType="VARCHAR"/>
+  	<result column="timedetail" property="timedetail" jdbcType="VARCHAR"/>
+  </resultMap>
+  <resultMap type="cn.ifxcode.model.BlogTopic" id="indexResultMap">
+    <id column="bid" property="bid" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+     <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    bid, title, description, viewcount, replycount, praisecount, notpraisecount, ishome, 
+    isdelete, createtime, classify_id, createOrRepost
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from blogtopic
+    where bid = #{bid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from blogtopic
+    where bid = #{bid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="bid" parameterType="cn.ifxcode.model.BlogTopic" >
+    insert into blogtopic (bid, title, description, 
+      viewcount, replycount, praisecount, 
+      notpraisecount, ishome, isdelete, 
+      createtime, classify_id, createOrRepost, 
+      content)
+    values (#{bid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{viewcount,jdbcType=INTEGER}, #{replycount,jdbcType=INTEGER}, #{praisecount,jdbcType=INTEGER}, 
+      #{notpraisecount,jdbcType=INTEGER}, #{ishome,jdbcType=VARCHAR}, #{isdelete,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{classify_id,jdbcType=INTEGER}, #{createOrRepost,jdbcType=VARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ifxcode.model.BlogTopic" >
+    insert into blogtopic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bid != null" >
+        bid,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="viewcount != null" >
+        viewcount,
+      </if>
+      <if test="replycount != null" >
+        replycount,
+      </if>
+      <if test="praisecount != null" >
+        praisecount,
+      </if>
+      <if test="notpraisecount != null" >
+        notpraisecount,
+      </if>
+      <if test="ishome != null" >
+        ishome,
+      </if>
+      <if test="isdelete != null" >
+        isdelete,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="classify_id != null" >
+        classify_id,
+      </if>
+      <if test="createOrRepost != null" >
+        createOrRepost,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bid != null" >
+        #{bid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="viewcount != null" >
+        #{viewcount,jdbcType=INTEGER},
+      </if>
+      <if test="replycount != null" >
+        #{replycount,jdbcType=INTEGER},
+      </if>
+      <if test="praisecount != null" >
+        #{praisecount,jdbcType=INTEGER},
+      </if>
+      <if test="notpraisecount != null" >
+        #{notpraisecount,jdbcType=INTEGER},
+      </if>
+      <if test="ishome != null" >
+        #{ishome,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        #{isdelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="classify_id != null" >
+        #{classify_id,jdbcType=INTEGER},
+      </if>
+      <if test="createOrRepost != null" >
+        #{createOrRepost,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ifxcode.model.BlogTopic" >
+    update blogtopic
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="viewcount != null" >
+        viewcount = #{viewcount,jdbcType=INTEGER},
+      </if>
+      <if test="replycount != null" >
+        replycount = #{replycount,jdbcType=INTEGER},
+      </if>
+      <if test="praisecount != null" >
+        praisecount = #{praisecount,jdbcType=INTEGER},
+      </if>
+      <if test="notpraisecount != null" >
+        notpraisecount = #{notpraisecount,jdbcType=INTEGER},
+      </if>
+      <if test="ishome != null" >
+        ishome = #{ishome,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        isdelete = #{isdelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="classify_id != null" >
+        classify_id = #{classify_id,jdbcType=INTEGER},
+      </if>
+      <if test="createOrRepost != null" >
+        createOrRepost = #{createOrRepost,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.ifxcode.model.BlogTopic" >
+    update blogtopic
+    set title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      viewcount = #{viewcount,jdbcType=INTEGER},
+      replycount = #{replycount,jdbcType=INTEGER},
+      praisecount = #{praisecount,jdbcType=INTEGER},
+      notpraisecount = #{notpraisecount,jdbcType=INTEGER},
+      ishome = #{ishome,jdbcType=VARCHAR},
+      isdelete = #{isdelete,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      classify_id = #{classify_id,jdbcType=INTEGER},
+      createOrRepost = #{createOrRepost,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ifxcode.model.BlogTopic" >
+    update blogtopic
+    set title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      viewcount = #{viewcount,jdbcType=INTEGER},
+      replycount = #{replycount,jdbcType=INTEGER},
+      praisecount = #{praisecount,jdbcType=INTEGER},
+      notpraisecount = #{notpraisecount,jdbcType=INTEGER},
+      ishome = #{ishome,jdbcType=VARCHAR},
+      isdelete = #{isdelete,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      classify_id = #{classify_id,jdbcType=INTEGER},
+      createOrRepost = #{createOrRepost,jdbcType=VARCHAR}
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+  <select id="findAll" resultMap="ResultMapWithBLOBs">
+  	select 
+  	bt.bid,bt.title,bt.description,bt.createtime,bt.viewcount,
+  	bt.replycount,bt.createOrRepost 
+  	from blogtopic as bt where bt.isdelete !=1 order by createtime desc
+  </select>
+  <select id="findBlogTopicAndSignAndClassifyByBid" resultMap="BlogTopicClassifyBlogSign">
+  	select 
+  	bt.bid,bt.title,bt.content,bt.viewcount,bt.replycount,bt.praisecount,
+  	bt.notpraisecount,bt.createtime,bt.createOrRepost,
+  	bs.bsid,bs.bsname,
+  	bc.cid,bc.name,bc.blogcount
+  	from blogtopic as bt 
+  	left join blogsign as bs on bs.blog_id = bt.bid 
+  	left join blogclassify as bc on bc.cid = bt.classify_id
+  	where bt.bid = #{0} and bc.isdelete != 1
+  </select>
+  <select id="findHomeBlogAndClassify" resultMap="BlogTopicClassifyBlogSign">
+  	select
+  	bt.bid,bt.title,bt.description,bt.viewcount,bt.replycount,bt.praisecount,bt.createtime,
+  	bc.cid,bc.name
+  	from blogtopic as bt
+  	left join blogclassify as bc on bc.cid = bt.classify_id
+  	where bt.isdelete !=1 and bc.isdelete !=1 and bt.ishome = 1 order by bt.createtime desc
+  </select>
+  <select id="findBlogLastest5" resultMap="ResultMapWithBLOBs">
+  	select bt.bid,bt.title,bt.viewcount
+  	from blogtopic as bt where bt.isdelete !=1 order by createtime desc limit 0,5
+  </select>
+  <select id="findBlogViewCountTop8" resultMap="ResultMapWithBLOBs">
+  	select bt.bid,bt.title,bt.viewcount
+  	from blogtopic as bt  where bt.isdelete !=1 order by viewcount desc limit 0,8
+  </select>
+  <select id="findBlogReplyCountTop8" resultMap="ResultMapWithBLOBs">
+  	select bt.bid,bt.title,bt.replycount
+  	from blogtopic as bt  where bt.isdelete !=1 order by replycount desc limit 0,8
+  </select>
+  <select id="findAllGroupDate" resultMap="BlogTimeClassifyResultMap">
+  	SELECT 
+  	count(DISTINCT(bt.createtime)) blogcount,
+    DATE_FORMAT(bt.createtime, '%Y年%m月') timeclassify,
+    DATE_FORMAT(bt.createtime, '%Y-%m') timedetail
+	FROM blogtopic as bt
+	WHERE bt.isdelete != 1
+	GROUP BY DATE_FORMAT(bt.createtime, '%Y-%m')
+	order by bt.createtime desc
+  </select>
+  <select id="findMinBlogTopic" resultMap="BaseResultMap">
+  	select bt.bid,bt.title from blogtopic as bt where bt.bid &lt; #{0} order by bt.bid desc limit 0,1
+  </select>
+  <select id="findMaxBlogTopic" resultMap="BaseResultMap">
+  	select bt.bid,bt.title from blogtopic as bt where bt.bid &gt; #{0} order by bt.bid asc limit 0,1
+  </select>
+  <select id="findAllBlogByClassifyId" resultMap="BlogTopicClassifyBlogSign">
+  	select
+  	bt.bid,bt.title,bt.description,bt.viewcount,bt.replycount,bt.praisecount,bt.createtime,
+  	bc.cid,bc.name,bc.blogcount
+  	from blogtopic as bt
+  	left join blogclassify as bc on bc.cid = bt.classify_id
+  	where bt.isdelete !=1 and bc.isdelete !=1 and bt.classify_id = #{0} order by bt.createtime desc
+  </select>
+  <select id="findhomePageCondition" resultMap="BlogTopicClassifyBlogSign" parameterType="cn.ifxcode.bean.PageInfo">
+  	select bt.*,bc.cid,bc.name
+  	from blogtopic as bt
+  	left join blogclassify as bc on bc.cid = bt.classify_id
+  	<where>
+  		bt.ishome = 1
+  		<if test="condition.bid != null and condition.bid != ''">
+  			and bt.bid = #{condition.bid}
+  		</if>
+  		<if test="condition.starttime != null and condition.starttime !=''">
+  			<![CDATA[
+            and bt.createtime >= #{condition.starttime}
+           ]]>
+  		</if>
+  		<if test="condition.endtime != null and condition.endtime !=''">
+  			<![CDATA[
+            and bt.createtime <= #{condition.endtime}
+           ]]>
+  		</if>
+  	</where>
+  	limit #{from},#{size}
+  </select>
+  <select id="findhomePageCount" resultType="java.lang.Integer" parameterType="cn.ifxcode.bean.PageInfo">
+  	select count(*) count
+  	from blogtopic as bt
+  	<where>
+  		bt.ishome = 1
+  		<if test="condition.bid != null and condition.bid != ''">
+  			and bt.bid = #{condition.bid}
+  		</if>
+  		<if test="condition.starttime != null and condition.starttime !=''">
+  			<![CDATA[
+            and bt.createtime >= #{condition.starttime}
+           ]]>
+  		</if>
+  		<if test="condition.endtime != null and condition.endtime !=''">
+  			<![CDATA[
+            and and bt.createtime <= #{condition.endtime}
+           ]]>
+  		</if>
+  	</where>
+  </select>
+    <select id="findBlogPageCondition" resultMap="BlogTopicClassifyBlogSign" parameterType="cn.ifxcode.bean.PageInfo">
+  	select bt.*,bc.cid,bc.name
+  	from blogtopic as bt
+  	left join blogclassify as bc on bc.cid = bt.classify_id
+  	<where>
+  		<if test="condition.bid != null and condition.bid != ''">
+  			bt.bid = #{condition.bid}
+  		</if>
+  		<if test="condition.cid != null and condition.cid != ''">
+  			bt.classify_id = #{condition.cid}
+  		</if>
+  		<if test="condition.name != null and condition.name != ''">
+  			bc.name like CONCAT('%','${condition.name}','%' )
+  		</if>
+  		<if test="condition.createOrRepost != null and condition.createOrRepost != ''">
+  			bt.createOrRepost = #{condition.createOrRepost}
+  		</if>
+  		<if test="condition.isdelete != null and condition.isdelete != ''">
+  			bt.isdelete = #{condition.isdelete}
+  		</if>
+  		<if test="condition.starttime != null and condition.starttime !=''">
+  			<![CDATA[
+            bt.createtime >= #{condition.starttime}
+           ]]>
+  		</if>
+  		<if test="condition.endtime != null and condition.endtime !=''">
+  			<![CDATA[
+            and bt.createtime <= #{condition.endtime}
+           ]]>
+  		</if>
+  	</where>
+  	limit #{from},#{size}
+  </select>
+  <select id="findBlogPageCount" resultType="java.lang.Integer" parameterType="cn.ifxcode.bean.PageInfo">
+  	select count(*) count
+  	from blogtopic as bt
+  	left join blogclassify as bc on bc.cid = bt.classify_id
+  	<where>
+  		<if test="condition.bid != null and condition.bid != ''">
+  			bt.bid = #{condition.bid}
+  		</if>
+  		<if test="condition.cid != null and condition.cid != ''">
+  			bt.classify_id = #{condition.cid}
+  		</if>
+  		<if test="condition.name != null and condition.name != ''">
+  			bc.name like CONCAT('%','${condition.name}','%' )
+  		</if>
+  		<if test="condition.createOrRepost != null and condition.createOrRepost != ''">
+  			bt.createOrRepost = #{condition.createOrRepost}
+  		</if>
+  		<if test="condition.isdelete != null and condition.isdelete != ''">
+  			bt.isdelete = #{condition.isdelete}
+  		</if>
+  		<if test="condition.starttime != null and condition.starttime !=''">
+  			<![CDATA[
+            bt.createtime >= #{condition.starttime}
+           ]]>
+  		</if>
+  		<if test="condition.endtime != null and condition.endtime !=''">
+  			<![CDATA[
+            and bt.createtime <= #{condition.endtime}
+           ]]>
+  		</if>
+  	</where>
+  </select>
+  <select id="findTopicByBsname" resultMap="BaseResultMap" parameterType="cn.ifxcode.bean.Page">
+  	select 
+  	bt.bid,bt.title,bt.description,bt.viewcount,bt.replycount,bt.createtime,bt.createOrRepost
+  	from blogtopic as bt 
+  	left join blogsign as bs on bt.bid = bs.blog_id 
+  	where bs.bsname= #{bsname} and bt.isdelete != 1
+  	order by bt.createtime desc
+  </select>
+  <select id="findTopicByCid" resultMap="BaseResultMap" parameterType="cn.ifxcode.bean.Page">
+  	select 
+  	bt.bid,bt.title,bt.description,bt.viewcount,bt.replycount,bt.createtime,bt.createOrRepost
+  	from blogtopic as bt 
+  	left join blogclassify as bc on bt.classify_id = bc.cid 
+  	where bc.cid = #{cid} and bt.isdelete != 1
+  	order by bt.createtime desc
+  </select>
+  <select id="findTopicByDate" resultMap="BaseResultMap" parameterType="cn.ifxcode.bean.Page">
+  	select 
+  	bt.bid,bt.title,bt.description,bt.viewcount,bt.replycount,bt.createtime,bt.createOrRepost
+  	from blogtopic as bt 
+  	where bt.createtime like CONCAT('${date}','%') and bt.isdelete != 1
+  	order by bt.createtime desc
+  </select>
+  <select id="findAllNotCondition" resultMap="indexResultMap">
+  	select bt.bid,bt.title,bt.content from blogtopic as bt
+  </select>
+</mapper>

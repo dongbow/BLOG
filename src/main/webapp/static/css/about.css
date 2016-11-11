@@ -1,0 +1,61 @@
+@CHARSET "UTF-8";
+.about { 
+	width: 740px; 
+	overflow: hidden; 
+	background: url(../images/r_line.jpg) repeat-y right; 
+	margin: 0 ;
+	float:left;
+	color: #696969;
+	font: "microsoft yahei";
+}
+
+.about h2 { 
+	font-size: 22px;
+    margin-bottom: 20px;
+    font-weight: normal;
+}
+
+
+.about ul {
+    width: 710px;
+    list-style: outside none none;
+}
+
+.about p {
+    margin-bottom: 20px;
+    line-height: 22px;
+}
+
+.right {
+    float: right;
+    margin-top: 10px;
+    position: relative;
+    width: 250px;
+    color: #696969;
+	font: "microsoft yahei";
+	padding-top:20px;
+}
+
+.right p{
+    margin-bottom: 15px;
+    line-height: 22px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

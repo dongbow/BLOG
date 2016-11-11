@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+ 
+	<settings>
+<!-- 	<setting name="useGeneratedKeys" value="true" />
+		延迟加载  
+	    <setting name="lazyLoadingEnabled" value="true"/>  
+	    <setting name="aggressiveLazyLoading" value="false"/> -->
+	    <setting name="logImpl" value="LOG4J"/>
+	    
+	</settings>
+	
+	<typeAliases>
+		<package name="com.ifxcode.model"/>
+	</typeAliases>
+	
+	<plugins>
+		<plugin interceptor="cn.ifxcode.interceptor.PageInterceptor"></plugin>
+		<!-- 上线时关闭，调试的时候打印SQL使用。插件顺序不要调换 -->
+		<plugin interceptor="cn.ifxcode.sql.SQLInterceptor"/>
+	</plugins>
+	
+</configuration>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ifxcode.dao.MoodMapper" >
+
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" >  
+      <property name="timeToIdleSeconds" value="3600"/>
+      <property name="timeToLiveSeconds" value="3600"/>
+      <property name="maxEntriesLocalHeap" value="1000"/>  
+      <property name="maxEntriesLocalDisk" value="10000000"/>  
+      <property name="memoryStoreEvictionPolicy" value="LRU"/>  
+  </cache>
+
+  <resultMap id="BaseResultMap" type="cn.ifxcode.model.Mood" >
+    <id column="mid" property="mid" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    mid, content, createtime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mood
+    where mid = #{mid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mood
+    where mid = #{mid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ifxcode.model.Mood" >
+    insert into mood (mid, content,createtime)
+    values (#{mid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},#{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ifxcode.model.Mood" >
+    insert into mood
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="mid != null" >
+        #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ifxcode.model.Mood" >
+    update mood
+    <set >
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where mid = #{mid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ifxcode.model.Mood" >
+    update mood
+    set content = #{content,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where mid = #{mid,jdbcType=INTEGER}
+  </update>
+  <select id="findAll" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+  	from mood
+  	order by createtime desc
+  </select>
+  <select id="findMoodPageCondition" resultMap="BaseResultMap" parameterType="cn.ifxcode.bean.PageInfo">
+  	select
+  	m.mid,m.content,m.createtime
+  	from mood as m
+  	<where>
+  		<if test="condition.starttime != null and condition.starttime !=''">
+  			<![CDATA[
+            m.createtime >= #{condition.starttime}
+           ]]>
+  		</if>
+  		<if test="condition.endtime != null and condition.endtime !=''">
+  			<![CDATA[
+            and m.createtime <= #{condition.endtime}
+           ]]>
+  		</if>
+  	</where>
+  	limit #{from},#{size}
+  </select>
+  <select id="findMoodPageCount" resultType="java.lang.Integer" parameterType="cn.ifxcode.bean.PageInfo">
+  	select count(*) count
+  	from mood as m
+  	<where>
+  		<if test="condition.starttime != null and condition.starttime !=''">
+  			<![CDATA[
+            m.createtime >= #{condition.starttime}
+           ]]>
+  		</if>
+  		<if test="condition.endtime != null and condition.endtime !=''">
+  			<![CDATA[
+            and m.createtime <= #{condition.endtime}
+           ]]>
+  		</if>
+  	</where>
+  </select>
+</mapper>

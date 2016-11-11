@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ifxcode.dao.DdlMapper" >
+
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" >  
+      <property name="timeToIdleSeconds" value="3600"/>
+      <property name="timeToLiveSeconds" value="3600"/>
+      <property name="maxEntriesLocalHeap" value="1000"/>  
+      <property name="maxEntriesLocalDisk" value="10000000"/>  
+      <property name="memoryStoreEvictionPolicy" value="LRU"/>  
+  </cache>
+
+  <resultMap id="BaseResultMap" type="cn.ifxcode.model.Ddl" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="sign" property="sign" jdbcType="INTEGER" />
+    <association property="dd" javaType="cn.ifxcode.model.Dd">
+	    <id column="id" property="id" jdbcType="INTEGER" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="ddesc" property="ddesc" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, value
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ddl
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ddl
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ifxcode.model.Ddl" >
+    insert into ddl (id, value
+      )
+    values (#{id,jdbcType=INTEGER}, #{value,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ifxcode.model.Ddl" >
+    insert into ddl
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ifxcode.model.Ddl" >
+    update ddl
+    <set >
+      <if test="value != null" >
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ifxcode.model.Ddl" >
+    update ddl
+    set value = #{value,jdbcType=VARCHAR},
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="findDDLPageCondition" resultMap="BaseResultMap" parameterType="cn.ifxcode.bean.PageInfo">
+  	select
+  	dd.name,dd.ddesc,ddl.*
+  	from ddl as ddl
+  	left join dd as dd on dd.id = ddl.dd_id
+  	<where>
+  		<if test="condition.name != null and condition.name != '' ">
+  			dd.id = #{condition.name}
+  		</if>
+  	</where>
+  	limit #{from},#{size}
+  </select>
+  <select id="findDDLPageCount" resultType="java.lang.Integer" parameterType="cn.ifxcode.bean.PageInfo">
+  	select count(*) count
+  	from ddl as ddl
+  	left join dd as dd on dd.id = ddl.id
+  	<where>
+  		<if test="condition.name != null and condition.name != '' ">
+  			dd.name = #{condition.name}
+  		</if>
+  	</where>
+  </select>
+</mapper>

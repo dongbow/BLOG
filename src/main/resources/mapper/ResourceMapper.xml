@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ifxcode.dao.ResourceMapper" >
+
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" >  
+      <property name="timeToIdleSeconds" value="3600"/>
+      <property name="timeToLiveSeconds" value="3600"/>
+      <property name="maxEntriesLocalHeap" value="1000"/>  
+      <property name="maxEntriesLocalDisk" value="10000000"/>  
+      <property name="memoryStoreEvictionPolicy" value="LRU"/>  
+  </cache>
+
+  <resultMap id="BaseResultMap" type="cn.ifxcode.model.Resource" >
+    <id column="resid" property="resid" jdbcType="INTEGER" />
+    <result column="resname" property="resname" jdbcType="VARCHAR" />
+    <result column="resurl" property="resurl" jdbcType="VARCHAR" />
+    <result column="resattr" property="resattr" jdbcType="VARCHAR" />
+    <result column="ressign" property="ressign" jdbcType="VARCHAR" />
+    <result column="resico" property="resico" jdbcType="VARCHAR" />
+    <result column="resdesc" property="resdesc" jdbcType="VARCHAR" />
+    <result column="resstatus" property="resstatus" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="rescreatetime" property="rescreatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    resid, resname, resurl, resattr, ressign, resico, resdesc, resstatus, pid, rescreatetime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from resource
+    where resid = #{resid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from resource
+    where resid = #{resid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ifxcode.model.Resource" >
+    insert into resource (resid, resname, resurl, 
+      resattr, ressign, resico, 
+      resdesc, resstatus, pid, 
+      rescreatetime)
+    values (#{resid,jdbcType=INTEGER}, #{resname,jdbcType=VARCHAR}, #{resurl,jdbcType=VARCHAR}, 
+      #{resattr,jdbcType=VARCHAR}, #{ressign,jdbcType=VARCHAR}, #{resico,jdbcType=VARCHAR}, 
+      #{resdesc,jdbcType=VARCHAR}, #{resstatus,jdbcType=VARCHAR}, #{pid,jdbcType=INTEGER}, 
+      #{rescreatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ifxcode.model.Resource" >
+    insert into resource
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="resid != null" >
+        resid,
+      </if>
+      <if test="resname != null" >
+        resname,
+      </if>
+      <if test="resurl != null" >
+        resurl,
+      </if>
+      <if test="resattr != null" >
+        resattr,
+      </if>
+      <if test="ressign != null" >
+        ressign,
+      </if>
+      <if test="resico != null" >
+        resico,
+      </if>
+      <if test="resdesc != null" >
+        resdesc,
+      </if>
+      <if test="resstatus != null" >
+        resstatus,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="rescreatetime != null" >
+        rescreatetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="resid != null" >
+        #{resid,jdbcType=INTEGER},
+      </if>
+      <if test="resname != null" >
+        #{resname,jdbcType=VARCHAR},
+      </if>
+      <if test="resurl != null" >
+        #{resurl,jdbcType=VARCHAR},
+      </if>
+      <if test="resattr != null" >
+        #{resattr,jdbcType=VARCHAR},
+      </if>
+      <if test="ressign != null" >
+        #{ressign,jdbcType=VARCHAR},
+      </if>
+      <if test="resico != null" >
+        #{resico,jdbcType=VARCHAR},
+      </if>
+      <if test="resdesc != null" >
+        #{resdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="resstatus != null" >
+        #{resstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="rescreatetime != null" >
+        #{rescreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ifxcode.model.Resource" >
+    update resource
+    <set >
+      <if test="resname != null" >
+        resname = #{resname,jdbcType=VARCHAR},
+      </if>
+      <if test="resurl != null" >
+        resurl = #{resurl,jdbcType=VARCHAR},
+      </if>
+      <if test="resattr != null" >
+        resattr = #{resattr,jdbcType=VARCHAR},
+      </if>
+      <if test="ressign != null" >
+        ressign = #{ressign,jdbcType=VARCHAR},
+      </if>
+      <if test="resico != null" >
+        resico = #{resico,jdbcType=VARCHAR},
+      </if>
+      <if test="resdesc != null" >
+        resdesc = #{resdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="resstatus != null" >
+        resstatus = #{resstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="rescreatetime != null" >
+        rescreatetime = #{rescreatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where resid = #{resid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ifxcode.model.Resource" >
+    update resource
+    set resname = #{resname,jdbcType=VARCHAR},
+      resurl = #{resurl,jdbcType=VARCHAR},
+      resattr = #{resattr,jdbcType=VARCHAR},
+      ressign = #{ressign,jdbcType=VARCHAR},
+      resico = #{resico,jdbcType=VARCHAR},
+      resdesc = #{resdesc,jdbcType=VARCHAR},
+      resstatus = #{resstatus,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=INTEGER},
+      rescreatetime = #{rescreatetime,jdbcType=TIMESTAMP}
+    where resid = #{resid,jdbcType=INTEGER}
+  </update>
+  <select id="findAllResource" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+    from resource
+  </select>
+</mapper>

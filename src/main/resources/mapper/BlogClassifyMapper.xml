@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ifxcode.dao.BlogClassifyMapper" >
+
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" >  
+      <property name="timeToIdleSeconds" value="3600"/>
+      <property name="timeToLiveSeconds" value="3600"/>
+      <property name="maxEntriesLocalHeap" value="1000"/>  
+      <property name="maxEntriesLocalDisk" value="10000000"/>  
+      <property name="memoryStoreEvictionPolicy" value="LRU"/>  
+  </cache>
+
+  <resultMap id="BaseResultMap" type="cn.ifxcode.model.BlogClassify" >
+    <id column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="blogcount" property="blogcount" jdbcType="INTEGER" />
+    <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <collection property="blogTopics" ofType="cn.ifxcode.model.BlogTopic">
+    	<id column="bid" property="bid" jdbcType="INTEGER" />
+	    <result column="title" property="title" jdbcType="VARCHAR" />
+	    <result column="description" property="description" jdbcType="VARCHAR" />
+	    <result column="viewcount" property="viewcount" jdbcType="INTEGER" />
+	    <result column="replycount" property="replycount" jdbcType="INTEGER" />
+	    <result column="praisecount" property="praisecount" jdbcType="INTEGER" />
+	    <result column="notpraisecount" property="notpraisecount" jdbcType="INTEGER" />
+	    <result column="ishome" property="ishome" jdbcType="VARCHAR" />
+	    <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
+	    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+	    <result column="createOrRepost" property="createOrRepost" jdbcType="VARCHAR" />
+	    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cid, name, blogcount, isdelete, createtime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from blogclassify
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from blogclassify
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ifxcode.model.BlogClassify" >
+    insert into blogclassify (cid, name, blogcount, 
+      isdelete, createtime)
+    values (#{cid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{blogcount,jdbcType=INTEGER}, 
+      #{isdelete,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ifxcode.model.BlogClassify" >
+    insert into blogclassify
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="blogcount != null" >
+        blogcount,
+      </if>
+      <if test="isdelete != null" >
+        isdelete,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="blogcount != null" >
+        #{blogcount,jdbcType=INTEGER},
+      </if>
+      <if test="isdelete != null" >
+        #{isdelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ifxcode.model.BlogClassify" >
+    update blogclassify
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="blogcount != null" >
+        blogcount = #{blogcount,jdbcType=INTEGER},
+      </if>
+      <if test="isdelete != null" >
+        isdelete = #{isdelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ifxcode.model.BlogClassify" >
+    update blogclassify
+    set name = #{name,jdbcType=VARCHAR},
+      blogcount = #{blogcount,jdbcType=INTEGER},
+      isdelete = #{isdelete,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <select id="findAll" resultMap="BaseResultMap">
+  	select
+  	bc.cid,bc.name,bc.blogcount
+  	from blogclassify as bc where bc.isdelete !=1 order by bc.createtime desc
+  </select>
+  <select id="findClassifyPageCondition" resultMap="BaseResultMap" parameterType="cn.ifxcode.bean.PageInfo">
+  	select bc.* from blogclassify as bc
+  	<where>
+  		<if test="condition.name != null and condition.name != ''">
+  			bc.name like CONCAT('%','${condition.name}','%' )
+  		</if>
+  		<if test="condition.isdelete != null and condition.isdelete !=''">
+  			bc.isdelete = #{condition.isdelete}
+  		</if>
+  		<if test="condition.starttime != null and condition.starttime !=''">
+  			<![CDATA[
+            bc.endtime >= #{condition.starttime}
+           ]]>
+  		</if>
+  		<if test="condition.endtime != null and condition.endtime !=''">
+  			<![CDATA[
+            and bc.endtime <= #{condition.endtime}
+           ]]>
+  		</if>
+  	</where>
+  	limit #{from},#{size}
+  </select>
+  <select id="findClassifyPageCount" resultType="java.lang.Integer" parameterType="cn.ifxcode.bean.PageInfo">
+  	select count(*) count
+  	from blogclassify as bc
+  	<where>
+  		<if test="condition.name != null and condition.name != ''">
+  			bc.name like CONCAT('%','${condition.name}','%' )
+  		</if>
+  		<if test="condition.isdelete != null and condition.isdelete !=''">
+  			bc.isdelete = #{condition.isdelete}
+  		</if>
+  		<if test="condition.starttime != null and condition.starttime !=''">
+  			<![CDATA[
+            bc.endtime >= #{condition.starttime}
+           ]]>
+  		</if>
+  		<if test="condition.endtime != null and condition.endtime !=''">
+  			<![CDATA[
+            and bc.endtime <= #{condition.endtime}
+           ]]>
+  		</if>
+  	</where>
+  </select>
+</mapper>

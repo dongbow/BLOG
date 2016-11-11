@@ -1,0 +1,271 @@
+@CHARSET "UTF-8";
+.book { 
+	width: 740px; 
+	overflow: hidden; 
+	background: url(../images/r_line.jpg) repeat-y right; 
+	margin: 0 ;
+	float:left;
+	color: #696969;
+	font: "microsoft yahei";
+	min-height:500px;
+}
+
+.book h2 { 
+	font-size: 22px;
+    margin-bottom: 20px;
+    font-weight: normal;
+}
+
+
+.book ul {
+    width: 710px;
+    list-style: outside none none;
+}
+
+.book p {
+    margin-bottom: 20px;
+    line-height: 22px;
+}
+
+.right {
+    float: right;
+    margin-top: 10px;
+    position: relative;
+    width: 250px;
+    color: #696969;
+	font: "microsoft yahei";
+	padding-top:20px;
+}
+
+.right p{
+    margin-bottom: 15px;
+    line-height: 22px;
+}
+
+#cke_bookreplyeditor.cke_chrome {
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0);
+}
+
+.bookreply .img{
+	float: left;
+	margin-right: 10px;
+}
+
+.bookreply .be{
+	float: right;
+	margin-right:25px;
+	overflow: hidden;
+}
+
+.bookreply .be button{
+	float: right;
+	margin-top: 10px;
+	width: 80px;
+	height: 30px;
+	display: block;
+	text-align: center;
+	border: 1px solid;
+	font: 16px "microsoft yahei";
+	color: #fff;
+	background: #8bbf5d;
+	cursor: pointer;
+}
+
+.yanyu{
+	overflow: hidden;
+	margin-bottom: 15px;
+}
+
+.yanyu p{
+	text-align: center;
+	color: lightseagreen;
+	font: 16px "microsoft yahei";
+	margin: 0;
+	padding: 0;
+	line-height: 25px;
+}
+
+.booktop{
+	padding:0 5px;
+	border-bottom: 1px solid #d1d1d1;
+	width:705px;
+	overflow: hidden;
+	text-align: left;
+	margin-bottom: 20px;
+}
+
+.booktop a{
+	display:block;
+	font: 18px "microsoft yahei";
+	color: #555;
+}
+
+#bookdetails{
+	width: 715px;
+	overflow: hidden;
+	margin-bottom: 20px;
+}
+
+.bookreply .be button:hover{
+	background: #5ea51b;
+}
+
+.page { 
+	margin: 20px 0; 
+	text-align: center; 
+	width: 100%; 
+	overflow: hidden; 
+}
+
+.page a b { 
+	color: #999; 
+}
+
+.page>b, .page a { 
+	margin: 0 2px; 
+	height: 26px; 
+	line-height: 26px; 
+	border-radius: 50%; 
+	width: 26px; 
+	text-align: center; 
+	display: inline-block ;
+}
+
+.page a { 
+	margin: 0 2px; 
+	height: 26px; 
+	line-height: 26px; 
+	border-radius: 50%; 
+	width: 26px; 
+	text-align: center; 
+	display: inline-block 
+}
+
+/* 针对IE6 */
+.page>b, .page a:hover { 
+	background: #333; 
+	color: #FFF; 
+}
+
+.page a { 
+	color: #F33; 
+	border: #999 1px solid; 
+}
+
+#bookdetails .reply_p{
+	width:715px;
+	height: auto;
+	overflow: hidden;
+	min-height: 65px;
+	margin-bottom: 10px;
+	padding:10px 0;
+	border-bottom:1px solid rgba(0, 0, 0, 0.13);
+}
+
+#bookdetails .head{
+	width:50px;
+	margin-right: 10px;
+	float: left;
+}
+
+#bookdetails .content{
+	width: 655px;
+	float: right;
+	height: auto;
+}
+
+#bookdetails .content p{
+	margin:5px 0;
+	line-height: 20px;
+	color: #666;
+	font-weight: normal;
+	font: 15px "microsoft yahei";
+}
+
+#bookdetails .tool span{
+	color:#aaa;
+}
+
+#bookdetails .tool a{
+	color:#aaa;
+	margin-left: 30px;
+	float: right;
+}
+
+#bookdetails .tool a:hover{
+	color:#666;
+}
+
+#cke_bookreplyeditor.cke_chrome {
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0);
+}
+
+#cke_childreplyeditor.cke_chrome {
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0);
+}
+
+.onclick .img{
+	float: left;
+	margin-right: 10px;
+}
+
+.onclick .cbe{
+	float: left;
+	overflow: hidden;
+}
+
+.onclick .cbe button{
+	float: right;
+	margin-top: 10px;
+	width: 80px;
+	height: 30px;
+	display: block;
+	text-align: center;
+	border: 1px solid;
+	font: 16px "microsoft yahei";
+	color: #fff;
+	background: #8bbf5d;
+	cursor: pointer;
+}
+
+.notclick{
+	display: none;
+	width: 655px;
+	margin-top: 10px;
+}
+
+.onclick{
+	display:block;
+}
+
+.childcont {
+	background: #fafafa none repeat scroll 0 0;
+	border: 1px solid #ddd;
+	margin-top: 8px;
+	padding: 5px;
+	width: 642px;
+	overflow: hidden;
+}
+
+.ccontent{
+	width: 592px;
+	float: right;
+	height: auto;
+}
+
+#bookdetails .childcont .head{
+	width: 40px;
+}
+
+.cc{
+	overflow: hidden;
+	height: auto;
+	padding: 5px 0;
+	border-bottom: 1px dashed #eee;
+}
+
+
+
+
+
+

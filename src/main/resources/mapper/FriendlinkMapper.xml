@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ifxcode.dao.FriendlinkMapper" >
+
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" >  
+      <property name="timeToIdleSeconds" value="3600"/>
+      <property name="timeToLiveSeconds" value="3600"/>
+      <property name="maxEntriesLocalHeap" value="1000"/>  
+      <property name="maxEntriesLocalDisk" value="10000000"/>  
+      <property name="memoryStoreEvictionPolicy" value="LRU"/>  
+  </cache>
+
+  <resultMap id="BaseResultMap" type="cn.ifxcode.model.Friendlink" >
+    <id column="fid" property="fid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="endtime" property="endtime" jdbcType="DATE" />
+    <result column="customer" property="customer" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="c_email" property="c_email" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    fid, name, url, isdelete, createtime, endtime, customer, phone, qq, c_email
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from friendlink
+    where fid = #{fid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from friendlink
+    where fid = #{fid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ifxcode.model.Friendlink" >
+    insert into friendlink (fid, name, url, 
+      isdelete, createtime, endtime, 
+      customer, phone, qq, 
+      c_email)
+    values (#{fid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{isdelete,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=DATE}, 
+      #{customer,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, 
+      #{c_email,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ifxcode.model.Friendlink" >
+    insert into friendlink
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        fid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="isdelete != null" >
+        isdelete,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="customer != null" >
+        customer,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="c_email != null" >
+        c_email,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        #{isdelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=DATE},
+      </if>
+      <if test="customer != null" >
+        #{customer,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="c_email != null" >
+        #{c_email,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ifxcode.model.Friendlink" >
+    update friendlink
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        isdelete = #{isdelete,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        endtime = #{endtime,jdbcType=DATE},
+      </if>
+      <if test="customer != null" >
+        customer = #{customer,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="c_email != null" >
+        c_email = #{c_email,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where fid = #{fid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ifxcode.model.Friendlink" >
+    update friendlink
+    set name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      isdelete = #{isdelete,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=DATE},
+      customer = #{customer,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      c_email = #{c_email,jdbcType=VARCHAR}
+    where fid = #{fid,jdbcType=INTEGER}
+  </update>
+  <select id="findNameAndUrlAll" resultMap="BaseResultMap">
+  	SELECT f.name,f.url FROM friendlink as f where isdelete != 1 and now() &lt;= f.endtime
+  </select>
+  <select id="findFriendLinkPageCondition" resultMap="BaseResultMap" parameterType="cn.ifxcode.bean.PageInfo">
+  	select f.* from friendlink as f
+  	<where>
+  		<if test="condition.name != null and condition.name !=''">
+  			f.name = #{condition.name}
+  		</if>
+  		<if test="condition.customer != null and condition.customer !=''">
+  			and f.customer = #{condition.customer}
+  		</if>
+  		<if test="condition.startcreatetime != null and condition.startcreatetime !=''">
+  			<![CDATA[
+  			and f.createtime >= #{condition.startcreatetime}
+  			]]>
+  		</if>
+  		<if test="condition.endcreatetime != null and condition.endcreatetime !=''">
+  			<![CDATA[
+            and f.endcreatetime <= #{condition.endcreatetime}
+           ]]>
+  		</if>
+  		<if test="condition.startEndtime != null and condition.startEndtime !=''">
+  			<![CDATA[
+            and f.endtime >= #{condition.startEndtime}
+           ]]>
+  		</if>
+  		<if test="condition.endEndtime != null and condition.endEndtime !=''">
+  			<![CDATA[
+            and f.endtime <= #{condition.endEndtime}
+           ]]>
+  		</if>
+  	</where>
+  	limit #{from},#{size}
+  </select>
+  <select id="findFriendLinkPageCount" resultType="java.lang.Integer" parameterType="cn.ifxcode.bean.PageInfo">
+  	select count(*) count
+  	from friendlink as f
+  	<where>
+  		<if test="condition.name != null and condition.name !=''">
+  			f.name = #{condition.name}
+  		</if>
+  		<if test="condition.customer != null and condition.customer !=''">
+  			and f.customer = #{condition.customer}
+  		</if>
+  		<if test="condition.startcreatetime != null and condition.startcreatetime !=''">
+  			<![CDATA[
+  			and f.createtime >= #{condition.startcreatetime}
+  			]]>
+  		</if>
+  		<if test="condition.endcreatetime != null and condition.endcreatetime !=''">
+  			<![CDATA[
+            and f.endcreatetime <= #{condition.endcreatetime}
+           ]]>
+  		</if>
+  		<if test="condition.startEndtime != null and condition.startEndtime !=''">
+  			<![CDATA[
+            and f.endtime >= #{condition.startEndtime}
+           ]]>
+  		</if>
+  		<if test="condition.endEndtime != null and condition.endEndtime !=''">
+  			<![CDATA[
+            and f.endtime <= #{condition.endEndtime}
+           ]]>
+  		</if>
+  	</where>
+  </select>
+</mapper>

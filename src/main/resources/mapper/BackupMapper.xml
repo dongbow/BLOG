@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ifxcode.dao.BackupMapper">
+
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" >  
+      <property name="timeToIdleSeconds" value="3600"/>
+      <property name="timeToLiveSeconds" value="3600"/>
+      <property name="maxEntriesLocalHeap" value="1000"/>  
+      <property name="maxEntriesLocalDisk" value="10000000"/>  
+      <property name="memoryStoreEvictionPolicy" value="LRU"/>  
+  </cache>
+
+  <resultMap id="BaseResultMap" type="cn.ifxcode.model.Backup">
+    <id column="backid" jdbcType="INTEGER" property="backid" />
+    <result column="backname" jdbcType="VARCHAR" property="backname" />
+    <result column="backdir" jdbcType="VARCHAR" property="backdir" />
+    <result column="createdate" jdbcType="TIMESTAMP" property="createdate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    backid, backname, backdir, createdate
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from backup
+    where backid = #{backid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from backup
+    where backid = #{backid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ifxcode.model.Backup">
+    insert into backup (backid, backname, backdir, 
+      createdate)
+    values (#{backid,jdbcType=INTEGER}, #{backname,jdbcType=VARCHAR}, #{backdir,jdbcType=VARCHAR}, 
+      #{createdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ifxcode.model.Backup">
+    insert into backup
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="backid != null">
+        backid,
+      </if>
+      <if test="backname != null">
+        backname,
+      </if>
+      <if test="backdir != null">
+        backdir,
+      </if>
+      <if test="createdate != null">
+        createdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="backid != null">
+        #{backid,jdbcType=INTEGER},
+      </if>
+      <if test="backname != null">
+        #{backname,jdbcType=VARCHAR},
+      </if>
+      <if test="backdir != null">
+        #{backdir,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ifxcode.model.Backup">
+    update backup
+    <set>
+      <if test="backname != null">
+        backname = #{backname,jdbcType=VARCHAR},
+      </if>
+      <if test="backdir != null">
+        backdir = #{backdir,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null">
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where backid = #{backid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ifxcode.model.Backup">
+    update backup
+    set backname = #{backname,jdbcType=VARCHAR},
+      backdir = #{backdir,jdbcType=VARCHAR},
+      createdate = #{createdate,jdbcType=TIMESTAMP}
+    where backid = #{backid,jdbcType=INTEGER}
+  </update>
+  <select id="findBackupPageCondition" resultMap="BaseResultMap" parameterType="cn.ifxcode.bean.PageInfo">
+    select
+  	<include refid="Base_Column_List" />
+  	from backup as b
+  	<where>
+  		<if test="condition.starttime != null and condition.starttime !=''">
+  			<![CDATA[
+            b.createtime >= #{condition.starttime}
+           ]]>
+  		</if>
+  		<if test="condition.endtime != null and condition.endtime !=''">
+  			<![CDATA[
+            and b.createtime <= #{condition.endtime}
+           ]]>
+  		</if>
+  	</where>
+  	limit #{from},#{size}
+  </select>
+  <select id="findBackupPageCount" resultType="java.lang.Integer" parameterType="cn.ifxcode.bean.PageInfo">
+    select count(*) count
+  	from backup as b
+  	<where>
+  		<if test="condition.starttime != null and condition.starttime !=''">
+  			<![CDATA[
+            b.createtime >= #{condition.starttime}
+           ]]>
+  		</if>
+  		<if test="condition.endtime != null and condition.endtime !=''">
+  			<![CDATA[
+            and b.createtime <= #{condition.endtime}
+           ]]>
+  		</if>
+  	</where>
+  </select>
+</mapper>

@@ -1,0 +1,346 @@
+@CHARSET "UTF-8";
+#hd{
+	border-bottom: 1px solid #ddd;
+}
+
+.main{
+	width: 1000px;
+	height: auto;
+	overflow: hidden;
+	background: #fff;
+	margin: 20px auto;
+	margin-bottom: 0;
+}
+
+.headpanel{
+	width: 1000px;
+	background: #fff;
+	height: 200px;
+	margin-bottom: 15px;
+	background: url("../images/head_bg.png") no-repeat;
+}
+
+.maininfo{
+	width: 1000px;
+	overflow: hidden;
+	height: auto;
+}
+
+.leftmenu{
+	width: 180px;
+	padding: 5 10px;
+	overflow: hidden;
+	height: auto;
+	background: #fff;
+	border: 1px solid #ddd;
+	float: left;
+}
+
+.leftmenu ul{
+	
+}
+
+.leftmenu ul li{
+	width: 180px;
+	height: 40px;
+	text-align: left;
+	display: block;
+	font: 20px/40px "microsoft yahei";
+}
+
+.leftmenu ul li.hover{
+	background: #5f9f3b;
+}
+
+.leftmenu ul li:hover{
+	background: #8bbf5d;
+}
+.leftmenu ul li a{
+	display: block;
+	width: 155px;
+	height: 40px;
+	padding-left: 25px;
+}
+.leftmenu ul li a:hover{
+	color: #fff;
+}
+
+.leftmenu ul li.hover a{
+	color: #fff;
+}
+
+.userimage{
+	width: 120px;
+	height: 120px;
+	background: #fff;
+	border: 1px solid #ccc;
+	position: absolute;
+	margin: 45px 20px 30px 40px;
+	padding: 3px;
+	border-radius:63px; 
+}
+
+.userimage img{
+	border-radius:60px; 
+}
+
+.headpanel span {
+  color: #333;
+  font: 27px "microsoft yahei";
+  margin-left: 193px;
+  margin-top: 100px;
+  position: absolute;
+}
+
+.data {
+	height: 35px;
+	margin-left: 193px;
+	margin-top: 135px;
+	overflow: hidden;
+	position: absolute;
+	width: 650px;
+	border-bottom: 1px solid #aaa;
+}
+
+.count a{
+	display: block;
+	float: left;
+	margin-right: 15px;
+	font: 18px "microsoft yahei";
+	margin-top: 7px;
+}
+
+.session a{
+	display: block;
+	float: right;
+	margin-left:15px;
+	font: 18px "microsoft yahei";
+	margin-top: 7px;
+}
+
+.data a:hover{
+	color: #111;
+}
+
+.rightcont{
+	float: right;
+	margin-left: 16px;
+	min-height: 1000px;
+	border: 1px solid #ddd;
+	width: 760px;
+	padding: 20px;
+}
+
+.body_info{
+	width: 760px;
+	overflow: hidden;
+	padding-bottom: 20px;
+	height: auto;
+}
+
+.head_title{
+	width: 760px;
+	height: 30px;
+	border-bottom: 2px solid #eee;
+}
+
+.head_title a{
+	display: block;
+	float: left;
+	margin-left: 20px;
+	font: 18px "microsoft yahei";
+	color: #5ea5eb;
+}
+
+table{
+	width: 760px;
+	color: #444;
+	margin-top: 20px;
+}
+
+th{
+	width: 90px;
+	font-weight: normal;
+	text-align: right;
+	height: 30px;
+	font: 17px/30px "microsoft yahei";
+}
+
+td{
+	width: 420px;
+	padding-left: 20px;
+	text-align: left;
+	height: 30px;
+	font: 17px/30px "microsoft yahei";
+}
+#message{
+	margin-top: 0;
+}
+
+#message th,#message td{
+	text-align: left;
+	height: auto;
+	font: 14px/20px "microsoft yahei";
+	border-bottom: 1px dashed #ddd; 
+}
+
+#message th{
+	font-weight: bold;
+	color: #19b4ea;
+}
+
+#message td{
+	padding: 5px 0;
+	color: #666;
+}
+
+#message td.blod{
+	font-weight: bold;
+	color:#444;
+}
+
+#message .mchoose{
+	width:6%;
+}
+
+#message .status{
+	width:9%;
+}
+
+#message .mcontent{
+	width:52%;
+}
+
+#message .msend{
+	width:15%;
+}
+
+#message .mtime{
+	width:18%;
+}
+
+.toolbar{
+	width:760px;
+	padding: 15px 0px;
+	overflow: hidden;
+}
+
+.toolbar span{
+	display: block;
+	float: left;
+    width: 7%;
+    margin-top: 3px;
+    margin-left: 2px;
+}
+
+.toolbar a{
+	display: block;
+	float: left;
+	background: #8bbf5d;
+	margin-right: 20px;
+	font: 15px/15px "microsoft yahei";
+	color: #fff;
+	padding: 5px 10px;
+}
+
+.page { 
+	margin: 20px 0; 
+	text-align: center; 
+	width: 100%; 
+	overflow: hidden; 
+}
+
+.page a b { 
+	color: #999; 
+}
+
+.page>b, .page a { 
+	margin: 0 2px; 
+	height: 26px; 
+	line-height: 26px; 
+	border-radius: 50%; 
+	width: 26px; 
+	text-align: center; 
+	display: inline-block ;
+}
+
+.page a { 
+	margin: 0 2px; 
+	height: 26px; 
+	line-height: 26px; 
+	border-radius: 50%; 
+	width: 26px; 
+	text-align: center; 
+	display: inline-block 
+}
+
+/* 针对IE6 */
+.page>b, .page a:hover { 
+	background: #333; 
+	color: #FFF; 
+}
+
+.page a { 
+	color: #F33; 
+	border: #999 1px solid; 
+}
+
+.top{
+	z-index: 100;
+}
+
+.showtip{
+	position:absolute;
+	width: 120px;
+	height: 120px;
+	background: rgba(0,0,0,0.4);
+	top:3px;
+	text-align: center;
+	z-index: 99;
+	border-radius:60px; 
+	display: none;
+}
+
+.showtip label{
+	color: #fff;
+	display: block;
+	margin-top:58px; 
+	cursor: pointer;
+}
+
+.show{
+	display: block;
+}
+
+.msgClass{
+	width:100%;
+	border-bottom:1px solid #ccc;
+	padding:0;
+	height:30px;
+	margin-bottom:10px;
+}
+
+.msgClass li{
+	float:left;
+	display:block;
+	width:80px;
+	height:30px;
+	background:#fff;
+}
+
+.msgClass li a{
+	width:60px;
+	padding:5px 10px;
+	height:20px;
+	display:block;
+	text-align:center;
+	font:16px/20px "microsoft yahei";
+}
+
+.msgClass li.msgOver{
+	border:1px solid #ccc;
+	border-bottom:none;
+	color:#19b4ea;
+}
+
+

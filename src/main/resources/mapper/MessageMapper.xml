@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ifxcode.dao.MessageMapper" >
+
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" >  
+      <property name="timeToIdleSeconds" value="3600"/>
+      <property name="timeToLiveSeconds" value="3600"/>
+      <property name="maxEntriesLocalHeap" value="1000"/>  
+      <property name="maxEntriesLocalDisk" value="10000000"/>  
+      <property name="memoryStoreEvictionPolicy" value="LRU"/>  
+  </cache>
+
+  <resultMap id="BaseResultMap" type="cn.ifxcode.model.Message" >
+    <id column="messageid" property="messageid" jdbcType="INTEGER" />
+    <result column="send_user_name" property="send_user_name" jdbcType="INTEGER" />
+    <result column="receive_user_name" property="receive_user_name" jdbcType="INTEGER" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="sendtime" property="sendtime" jdbcType="TIMESTAMP" />
+    <result column="viewtime" property="viewtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap type="cn.ifxcode.vo.MessageVo" id="MessageVoResultMap" extends="BaseResultMap">
+  	<result column="send_nickname" property="send_nickname" jdbcType="VARCHAR" />
+    <result column="receive_nickname" property="receive_nickname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    messageid, send_user_name, receive_user_name, message, status, sendtime, viewtime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from message
+    where messageid = #{messageid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from message
+    where messageid = #{messageid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ifxcode.model.Message" >
+    insert into message (messageid, send_user_name, receive_user_name, 
+      message, status, sendtime, 
+      viewtime)
+    values (#{messageid,jdbcType=INTEGER}, #{send_user_name,jdbcType=INTEGER}, #{receive_user_name,jdbcType=INTEGER}, 
+      #{message,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{sendtime,jdbcType=TIMESTAMP}, 
+      #{viewtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ifxcode.model.Message" >
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="messageid != null" >
+        messageid,
+      </if>
+      <if test="send_user_name != null" >
+        send_user_name,
+      </if>
+      <if test="receive_user_name != null" >
+        receive_user_name,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="sendtime != null" >
+        sendtime,
+      </if>
+      <if test="viewtime != null" >
+        viewtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="messageid != null" >
+        #{messageid,jdbcType=INTEGER},
+      </if>
+      <if test="send_user_name != null" >
+        #{send_user_name,jdbcType=INTEGER},
+      </if>
+      <if test="receive_user_name != null" >
+        #{receive_user_name,jdbcType=INTEGER},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null" >
+        #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="viewtime != null" >
+        #{viewtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ifxcode.model.Message" >
+    update message
+    <set >
+      <if test="send_user_name != null" >
+        send_user_name = #{send_user_name,jdbcType=INTEGER},
+      </if>
+      <if test="receive_user_name != null" >
+        receive_user_name = #{receive_user_name,jdbcType=INTEGER},
+      </if>
+      <if test="message != null" >
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="sendtime != null" >
+        sendtime = #{sendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="viewtime != null" >
+        viewtime = #{viewtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where messageid = #{messageid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ifxcode.model.Message" >
+    update message
+    set send_user_name = #{send_user_name,jdbcType=INTEGER},
+      receive_user_name = #{receive_user_name,jdbcType=INTEGER},
+      message = #{message,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      sendtime = #{sendtime,jdbcType=TIMESTAMP},
+      viewtime = #{viewtime,jdbcType=TIMESTAMP}
+    where messageid = #{messageid,jdbcType=INTEGER}
+  </update>
+  <select id="findMsgCountByUid" resultType="java.lang.Integer">
+  	select count(*) count from message where receive_user_name = #{0} and status = 0
+  </select>
+  <select id="findAllStatusMessage" resultType="java.lang.Integer">
+  	select msg.messageid from message as msg where msg.receive_user_name = #{uid} and msg.status = #{status}
+  </select>
+  <update id="updateStatus0to1" parameterType="java.util.List">
+  	update message set status = 1 where messageid in 
+  	<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+  		#{item}
+  	</foreach>
+  </update>
+  <select id="findAllMessage" resultMap="MessageVoResultMap">
+  	SELECT msg.*,u.nickname as send_nickname
+	FROM message as msg 
+	left join user as u on u.uid = msg.send_user_name 
+	where msg.receive_user_name = #{uid} and msg.status = #{status} order by sendtime desc
+  </select>
+</mapper>

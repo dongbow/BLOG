@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ifxcode.dao.UserMapper" >
+
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" >  
+      <property name="timeToIdleSeconds" value="3600"/>
+      <property name="timeToLiveSeconds" value="3600"/>
+      <property name="maxEntriesLocalHeap" value="1000"/>  
+      <property name="maxEntriesLocalDisk" value="10000000"/>  
+      <property name="memoryStoreEvictionPolicy" value="LRU"/>  
+  </cache>
+
+  <resultMap id="BaseResultMap" type="cn.ifxcode.model.User" >
+    <id column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="userimage" property="userimage" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="birth" property="birth" jdbcType="DATE" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="blogcount" property="blogcount" jdbcType="INTEGER" />
+    <result column="replycount" property="replycount" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
+    <result column="lastloginTime" property="lastloginTime" jdbcType="TIMESTAMP" />
+    <result column="lastloginip" property="lastloginip" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="createip" property="createip" jdbcType="VARCHAR" />
+    <result column="role_id" property="role_id" jdbcType="INTEGER" />
+    <collection property="blogReplies" ofType="cn.ifxcode.model.BlogReply">
+	    <id column="bg_rid" property="bg_rid" jdbcType="INTEGER" />
+	    <result column="content" property="content" jdbcType="VARCHAR" />
+	    <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
+	    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    </collection>
+  </resultMap>
+  <resultMap type="cn.ifxcode.model.User" id="UserRoleResultMap" extends="BaseResultMap">
+  	<association property="role" column="role_id" javaType="cn.ifxcode.model.Role">
+	  	<id column="rid" property="rid" jdbcType="INTEGER" />
+	    <result column="name" property="name" jdbcType="VARCHAR" />
+	    <result column="roledesc" property="roledesc" jdbcType="VARCHAR" />
+	    <result column="role_status" property="role_status" jdbcType="VARCHAR" />
+    	<result column="role_createtime" property="role_createtime" jdbcType="TIMESTAMP" />
+    </association>
+  </resultMap>
+  <resultMap type="cn.ifxcode.vo.UserVo" id="userVoResultMap">
+  	<id column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="birth" property="birth" jdbcType="DATE" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="blogcount" property="blogcount" jdbcType="INTEGER" />
+    <result column="replycount" property="replycount" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="lastloginTime" property="lastloginTime" jdbcType="TIMESTAMP" />
+    <result column="lastloginip" property="lastloginip" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="createip" property="createip" jdbcType="VARCHAR" />
+    <result column="rolename" property="rolename" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    uid, username, nickname, password, userimage, email, sex, birth, province, city, 
+    qq, blogcount, replycount, status, isdelete, lastloginTime, lastloginip, createtime, createip, role_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where uid = #{uid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ifxcode.model.User" >
+    insert into user (uid, username, nickname, 
+      password, userimage, email, 
+      sex, birth, province, 
+      city, qq, blogcount, 
+      replycount, status, isdelete, lastloginTime, 
+      lastloginip, createtime, createip, role_id
+      )
+    values (#{uid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{userimage,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{birth,jdbcType=DATE}, #{province,jdbcType=VARCHAR}, 
+      #{city,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{blogcount,jdbcType=INTEGER}, 
+      #{replycount,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR}, #{isdelete,jdbcType=VARCHAR}, #{lastloginTime,jdbcType=TIMESTAMP}, 
+      #{lastloginip,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{createip,jdbcType=VARCHAR},
+      #{role_id,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ifxcode.model.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="nickname != null" >
+        nickname,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="userimage != null" >
+        userimage,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="birth != null" >
+        birth,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="blogcount != null" >
+        blogcount,
+      </if>
+      <if test="replycount != null" >
+        replycount,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isdelete != null" >
+        isdelete,
+      </if>
+      <if test="lastloginTime != null" >
+        lastloginTime,
+      </if>
+      <if test="lastloginip != null" >
+        lastloginip,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="createip != null" >
+        createip,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userimage != null" >
+        #{userimage,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="birth != null" >
+        #{birth,jdbcType=DATE},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="blogcount != null" >
+        #{blogcount,jdbcType=INTEGER},
+      </if>
+      <if test="replycount != null" >
+        #{replycount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        #{isdelete,jdbcType=VARCHAR},
+      </if>
+      <if test="lastloginTime != null" >
+        #{lastloginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastloginip != null" >
+        #{lastloginip,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createip != null" >
+        #{createip,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ifxcode.model.User" >
+    update user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="userimage != null" >
+        userimage = #{userimage,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="birth != null" >
+        birth = #{birth,jdbcType=DATE},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="blogcount != null" >
+        blogcount = #{blogcount,jdbcType=INTEGER},
+      </if>
+      <if test="replycount != null" >
+        replycount = #{replycount,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+      	status = #{status, jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        isdelete = #{isdelete,jdbcType=VARCHAR},
+      </if>
+      <if test="lastloginTime != null" >
+        lastloginTime = #{lastloginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastloginip != null" >
+        lastloginip = #{lastloginip,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createip != null" >
+        createip = #{createip,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ifxcode.model.User" >
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      userimage = #{userimage,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      birth = #{birth,jdbcType=DATE},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      blogcount = #{blogcount,jdbcType=INTEGER},
+      replycount = #{replycount,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      isdelete = #{isdelete,jdbcType=VARCHAR},
+      lastloginTime = #{lastloginTime,jdbcType=TIMESTAMP},
+      lastloginip = #{lastloginip,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      createip = #{createip,jdbcType=VARCHAR},
+      role_id = #{role_id,jdbcType=INTEGER}
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+  <select id="adminLogin" parameterType="java.lang.String" resultMap="UserRoleResultMap">
+  	select u.*, r.* from user u left join
+  		role r on r.rid = u.role_id where u.username = #{username} and u.password = #{password}
+  </select>
+  <select id="checkLogin" parameterType="cn.ifxcode.model.User" resultMap="UserRoleResultMap">
+  	select u.*, r.* 
+  	from user as u 
+  	left join role as r on r.rid = u.role_id 
+  	where u.username = #{username} and u.password = #{password}
+  </select>
+  <select id="findSuperAdminInfo" resultMap="BaseResultMap">
+  	select
+  	u.userimage,u.nickname,u.province,u.city,u.qq,u.blogcount,u.replycount
+  	from user as u where u.uid = 1
+  </select>
+  <select id="findUserByNickname" resultMap="BaseResultMap">
+  	select
+  	u.uid,u.username,u.nickname,u.userimage,u.email,u.sex,u.birth,u.province,
+  	u.city,u.qq,u.replycount,u.status,u.lastloginTime,u.lastloginip,u.createtime,u.createip
+  	from user as u
+  	where u.nickname = #{0} and u.isdelete != 1
+  </select>
+  <select id="findAllIsNotDelete" resultMap="UserRoleResultMap">
+  	select
+  	u.uid,u.username,u.nickname,u.email,u.sex,u.birth,u.province,u.city,u.qq,
+  	u.blogcount,u.replycount,u.status,u.lastloginTime,u.lastloginip,u.createtime,
+  	u.createip,r.rid,r.name
+  	from user as u
+  	left join role as r on u.role_id = r.rid
+  	where u.isdelete != 1
+  </select>
+  <select id="findUserPageCondition" resultMap="userVoResultMap" parameterType="cn.ifxcode.bean.PageInfo">
+  	select
+  	u.uid,u.username,u.nickname,u.email,u.sex,u.birth,u.province,u.city,u.qq,
+  	u.blogcount,u.replycount,u.status,u.lastloginTime,u.lastloginip,u.createtime,
+  	u.createip,r.name as rolename
+  	from user as u
+  	left join role as r on u.role_id = r.rid
+  	<where>
+  		u.isdelete != 1
+  		<if test="condition.rid != null and condition.rid !=''">
+  			and u.role_id = #{condition.rid}
+  		</if>
+  		<if test="condition.uid != null and condition.uid !=''">
+  			and u.uid = #{condition.uid}
+  		</if>
+  		<if test="condition.username != null and condition.username !=''">
+  			and u.username = #{condition.username}
+  		</if>
+  		<if test="condition.nickname != null and condition.nickname !=''">
+  			and u.nickname = #{condition.nickname}
+  		</if>
+  		<if test="condition.status != null and condition.status !=''">
+  			and u.status = #{condition.status}
+  		</if>
+  		<if test="condition.starttime != null and condition.starttime !=''">
+  			<![CDATA[
+            and u.createtime >= #{condition.starttime}
+           ]]>
+  		</if>
+  		<if test="condition.endtime != null and condition.endtime !=''">
+  			<![CDATA[
+            and u.createtime <= #{condition.endtime}
+           ]]>
+  		</if>
+  	</where>
+  	limit #{from},#{size}
+  </select>
+  <select id="findUserPageCount" resultType="java.lang.Integer" parameterType="cn.ifxcode.bean.PageInfo">
+  	select count(*) count
+  	from user as u
+  	<where>
+  		u.isdelete != 1
+  		<if test="condition.rid != null and condition.rid !=''">
+  			and u.role_id = #{condition.rid}
+  		</if>
+  		<if test="condition.uid != null and condition.uid !=''">
+  			and u.uid = #{condition.uid}
+  		</if>
+  		<if test="condition.username != null and condition.username !=''">
+  			and u.username = #{condition.username}
+  		</if>
+  		<if test="condition.nickname != null and condition.nickname !=''">
+  			and u.nickname = #{condition.nickname}
+  		</if>
+  		<if test="condition.status != null and condition.status !=''">
+  			and u.status = #{condition.status}
+  		</if>
+  		<if test="condition.starttime != null and condition.starttime !=''">
+  			<![CDATA[
+            and u.createtime >= #{condition.starttime}
+           ]]>
+  		</if>
+  		<if test="condition.endtime != null and condition.endtime !=''">
+  			<![CDATA[
+            and u.createtime <= #{condition.endtime}
+           ]]>
+  		</if>
+  	</where>
+  </select>
+  <select id="findDataExits" resultType="boolean" parameterType="java.lang.String">
+  	select count(*) from user as u where u.username = #{str} or u.nickname = #{str} or u.email = #{str}
+  </select>
+</mapper>

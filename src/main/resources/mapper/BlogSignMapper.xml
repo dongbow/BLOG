@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ifxcode.dao.BlogSignMapper" >
+
+  <cache type="org.mybatis.caches.ehcache.LoggingEhcache" >  
+      <property name="timeToIdleSeconds" value="3600"/>
+      <property name="timeToLiveSeconds" value="3600"/>
+      <property name="maxEntriesLocalHeap" value="1000"/>  
+      <property name="maxEntriesLocalDisk" value="10000000"/>  
+      <property name="memoryStoreEvictionPolicy" value="LRU"/>  
+  </cache>
+  
+  <resultMap id="BaseResultMap" type="cn.ifxcode.model.BlogSign" >
+    <id column="bsid" property="bsid" jdbcType="INTEGER" />
+    <result column="bsname" property="bsname" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="blog_id" property="blog_id" jdbcType="INTEGER" />
+    <association property="blogTopic" javaType="cn.ifxcode.model.BlogTopic">
+    	<id column="blog_id" property="bid" jdbcType="INTEGER" />
+    	<result column="title" property="title" jdbcType="VARCHAR" />
+    	<result column="description" property="description" jdbcType="VARCHAR" />
+	    <result column="viewcount" property="viewcount" jdbcType="INTEGER" />
+	    <result column="replycount" property="replycount" jdbcType="INTEGER" />
+	    <result column="praisecount" property="praisecount" jdbcType="INTEGER" />
+	    <result column="notpraisecount" property="notpraisecount" jdbcType="INTEGER" />
+	    <result column="ishome" property="ishome" jdbcType="VARCHAR" />
+	    <result column="isdelete" property="isdelete" jdbcType="VARCHAR" />
+	    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+	    <result column="createOrRepost" property="createOrRepost" jdbcType="VARCHAR" />
+	    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    </association>
+  </resultMap>
+  <resultMap type="cn.ifxcode.model.BlogTopic" id="blogTopicResultMap">
+  		<id column="bid" property="bid" jdbcType="INTEGER" />
+    	<result column="title" property="title" jdbcType="VARCHAR" />
+    	<result column="description" property="description" jdbcType="VARCHAR" />
+	    <result column="viewcount" property="viewcount" jdbcType="INTEGER" />
+	    <result column="replycount" property="replycount" jdbcType="INTEGER" />
+	    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+	    <result column="createOrRepost" property="createOrRepost" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+     bsid, bsname, createtime, blog_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from blogsign
+    where bsid = #{bsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from blogsign
+    where bsid = #{bsid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.ifxcode.model.BlogSign" >
+    insert into blogsign (bsid, bsname, createtime, 
+      blog_id)
+    values (#{bsid,jdbcType=INTEGER}, #{bsname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{blog_id,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ifxcode.model.BlogSign" >
+        insert into blogsign
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bsid != null" >
+        bsid,
+      </if>
+      <if test="bsname != null" >
+        bsname,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="blog_id != null" >
+        blog_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bsid != null" >
+        #{bsid,jdbcType=INTEGER},
+      </if>
+      <if test="bsname != null" >
+        #{bsname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blog_id != null" >
+        #{blog_id,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ifxcode.model.BlogSign" >
+   update blogsign
+    <set >
+      <if test="bsname != null" >
+        bsname = #{bsname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="blog_id != null" >
+        blog_id = #{blog_id,jdbcType=INTEGER},
+      </if>
+    </set>
+    where bsid = #{bsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ifxcode.model.BlogSign" >
+    update blogsign
+    set bsname = #{bsname,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      blog_id = #{blog_id,jdbcType=INTEGER}
+    where bsid = #{bsid,jdbcType=INTEGER}
+  </update>
+  <select id="findSignPageCondition" resultMap="BaseResultMap" parameterType="cn.ifxcode.bean.PageInfo">
+  	select bs.*,b.bid
+  	from blogsign as bs
+  	left join blogtopic as b on b.bid = bs.blog_id
+  	<where>
+  		<if test="condition.blog_id != null and condition.blog_id != ''">
+  			bs.blog_id = #{condition.blog_id}
+  		</if>
+  		<if test="condition.bsname != null and condition.bsname != ''">
+  			bs.bsname like CONCAT('%','${condition.bsname}','%' )
+  		</if>
+  		<if test="condition.starttime != null and condition.starttime !=''">
+  			<![CDATA[
+            bs.endtime >= #{condition.starttime}
+           ]]>
+  		</if>
+  		<if test="condition.endtime != null and condition.endtime !=''">
+  			<![CDATA[
+            and bs.endtime <= #{condition.endtime}
+           ]]>
+  		</if>
+  	</where>
+  	limit #{from},#{size}
+  </select>
+  <select id="findSignPageCount" resultType="java.lang.Integer" parameterType="cn.ifxcode.bean.PageInfo">
+  	select count(*) count
+  	from blogsign as bs
+  	<where>
+  		<if test="condition.blog_id != null and condition.blog_id != ''">
+  			bs.blog_id = #{condition.blog_id}
+  		</if>
+  		<if test="condition.bsname != null and condition.bsname != ''">
+  			bs.bsname like CONCAT('%','${condition.bsname}','%' )
+  		</if>
+  		<if test="condition.starttime != null and condition.starttime !=''">
+  			<![CDATA[
+            bs.endtime >= #{condition.starttime}
+           ]]>
+  		</if>
+  		<if test="condition.endtime != null and condition.endtime !=''">
+  			<![CDATA[
+            and bs.endtime <= #{condition.endtime}
+           ]]>
+  		</if>
+  	</where>
+  </select>
+  <insert id="insertList" parameterType="cn.ifxcode.model.BlogSign">
+  	insert into blogsign (bsid, bsname, createtime, 
+      blog_id)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+    	(#{item.bsid},#{item.bsname},#{item.createtime},#{item.blog_id})
+    </foreach>
+  </insert>
+  <select id="findTopicByBsname" resultMap="BaseResultMap">
+  	select 
+  	bt.bid,bt.title,bt.description,bt.viewcount,bt.replycount,bt.createtime,bt.createOrRepost
+  	from blogsign as bs 
+  	left join blogtopic as bt on bt.bid = bs.blog_id 
+  	where bs.bsname= #{bsname} and bt.isdelete != 1
+  	order by bt.createtime desc
+  </select>
+</mapper>
