@@ -1,8 +1,8 @@
-### ËµÃ÷
-ifxcode.sql  ½á¹¹
-ifxcode_data.sql  ½á¹¹ºÍÊý¾Ý
+### è¯´æ˜Ž
+1. ifxcode.sql  ç»“æž„
+2. ifxcode_data.sql  ç»“æž„å’Œæ•°æ®
 
-### ÃÜÂë
-e10adc3949ba59abbe56e057f20f883e   MD5¼ÓÃÜ
-> ¶ÔÓ¦Ã÷ÎÄÃÜÂë£º123456
+### å¯†ç 
+e10adc3949ba59abbe56e057f20f883e   MD5åŠ å¯†
+> å¯¹åº”æ˜Žæ–‡å¯†ç ï¼š123456
 
