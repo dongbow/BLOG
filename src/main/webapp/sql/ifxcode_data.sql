@@ -1,11 +1,6 @@
-/*
-Navicat MySQL Data Transfer
-Source Host     : 115.159.148.205:3306
-Source Database : ifxcode
-Target Host     : 115.159.148.205:3306
-Target Database : ifxcode
-Date: 2016-06-17 23:35:36
-*/
+CREATE DATABASE ifxcode DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+use ifxcode;
 
 SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
