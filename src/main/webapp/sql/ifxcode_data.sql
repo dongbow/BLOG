@@ -475,9 +475,6 @@ CREATE TABLE `friendlink` (
 -- Records of friendlink
 -- ----------------------------
 INSERT INTO `friendlink` VALUES ('1', '我的微博', 'http://weibo.com/dongbow', '0', '2016-04-12 23:42:07', '2017-04-12', null, null, null, null);
-INSERT INTO `friendlink` VALUES ('2', '郑州轻工业学院', 'http://www.zzuli.edu.cn', '0', '2016-04-12 23:43:00', '2016-08-12', null, null, null, null);
-INSERT INTO `friendlink` VALUES ('3', '信息门户', 'http://my.zzuli.edu.cn', '0', '2016-04-12 23:43:47', '2016-08-12', null, null, null, null);
-INSERT INTO `friendlink` VALUES ('4', '软件学院', 'http://soft.zzuli.edu.cn', '0', '2016-04-12 23:46:09', '2016-08-12', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for loginlog
@@ -597,37 +594,6 @@ INSERT INTO `loginlog` VALUES ('99', 'Smart_咚咚', '127.0.0.1', '/account/logi
 INSERT INTO `loginlog` VALUES ('100', 'Admin_1', '127.0.0.1', '/account/login', '2016-05-20 13:20:11');
 INSERT INTO `loginlog` VALUES ('101', 'Sample', '127.0.0.1', '/account/login', '2016-05-20 13:29:01');
 INSERT INTO `loginlog` VALUES ('102', 'BILIBILI', '127.0.0.1', '/account/login', '2016-05-24 16:01:26');
-INSERT INTO `loginlog` VALUES ('103', 'Smart_咚咚', '120.194.25.86', '/account/login', '2016-05-25 09:41:47');
-INSERT INTO `loginlog` VALUES ('104', 'BILIBILI', '120.194.25.86', '/account/login', '2016-05-25 11:46:15');
-INSERT INTO `loginlog` VALUES ('105', 'Smart_咚咚', '59.70.159.134', '/system/admin/login', '2016-05-25 15:54:26');
-INSERT INTO `loginlog` VALUES ('500', 'Smart_咚咚', '120.194.3.163', '/account/login', '2016-05-25 21:17:46');
-INSERT INTO `loginlog` VALUES ('501', 'Smart_咚咚', '171.15.195.222', '/account/login', '2016-05-26 14:51:53');
-INSERT INTO `loginlog` VALUES ('502', 'Smart_咚咚', '59.70.159.142', '/account/login', '2016-05-26 18:56:45');
-INSERT INTO `loginlog` VALUES ('503', 'Smart_咚咚', '59.70.159.142', '/account/login', '2016-05-26 18:56:57');
-INSERT INTO `loginlog` VALUES ('864', 'Smart_咚咚', '120.194.25.87', '/system/admin/login', '2016-05-26 23:07:09');
-INSERT INTO `loginlog` VALUES ('865', 'Smart_咚咚', '61.158.148.68', '/system/admin/login', '2016-05-26 23:59:26');
-INSERT INTO `loginlog` VALUES ('866', 'Smart_咚咚', '59.70.159.142', '/account/login', '2016-05-27 09:29:01');
-INSERT INTO `loginlog` VALUES ('867', 'Smart_咚咚', '171.15.195.222', '/account/login', '2016-05-27 21:29:57');
-INSERT INTO `loginlog` VALUES ('1228', 'Smart_咚咚', '59.70.159.142', '/account/login', '2016-05-28 14:20:19');
-INSERT INTO `loginlog` VALUES ('1589', 'Smart_咚咚', '59.70.159.142', '/account/login', '2016-05-29 11:10:22');
-INSERT INTO `loginlog` VALUES ('1590', 'Smart_咚咚', '61.158.148.60', '/account/login', '2016-05-30 02:39:44');
-INSERT INTO `loginlog` VALUES ('1951', 'Smart_咚咚', '120.194.3.157', '/account/login', '2016-05-31 17:20:01');
-INSERT INTO `loginlog` VALUES ('2309', 'Smart_咚咚', '171.15.195.222', '/account/login', '2016-06-01 10:35:12');
-INSERT INTO `loginlog` VALUES ('2310', 'Smart_咚咚', '120.194.25.86', '/system/admin/login', '2016-06-01 13:46:20');
-INSERT INTO `loginlog` VALUES ('2671', 'Smart_咚咚', '120.194.25.84', '/system/admin/login', '2016-06-02 15:52:42');
-INSERT INTO `loginlog` VALUES ('2672', 'Smart_咚咚', '120.194.25.78', '/account/login', '2016-06-03 10:11:21');
-INSERT INTO `loginlog` VALUES ('2673', 'Smart_咚咚', '120.194.25.72', '/account/login', '2016-06-03 15:20:39');
-INSERT INTO `loginlog` VALUES ('3034', 'Smart_咚咚', '120.194.25.78', '/system/admin/login', '2016-06-05 00:00:09');
-INSERT INTO `loginlog` VALUES ('3395', 'Smart_咚咚', '120.194.25.78', '/account/login', '2016-06-05 10:44:37');
-INSERT INTO `loginlog` VALUES ('3396', 'Smart_咚咚', '59.70.159.130', '/account/login', '2016-06-05 12:50:48');
-INSERT INTO `loginlog` VALUES ('3397', 'Smart_咚咚', '218.28.23.160', '/system/admin/login', '2016-06-05 22:40:38');
-INSERT INTO `loginlog` VALUES ('3755', 'Smart_咚咚', '120.194.25.88', '/account/login', '2016-06-06 13:20:14');
-INSERT INTO `loginlog` VALUES ('3756', 'Smart_咚咚', '120.194.25.88', '/system/admin/login', '2016-06-06 15:43:13');
-INSERT INTO `loginlog` VALUES ('3757', 'Smart_咚咚', '120.194.25.88', '/account/login', '2016-06-06 22:24:57');
-INSERT INTO `loginlog` VALUES ('3758', 'Smart_咚咚', '120.194.25.88', '/account/login', '2016-06-07 16:12:28');
-INSERT INTO `loginlog` VALUES ('3759', 'Smart_咚咚', '59.70.159.132', '/system/admin/login', '2016-06-08 22:57:50');
-INSERT INTO `loginlog` VALUES ('3760', 'Smart_咚咚', '120.194.25.88', '/account/login', '2016-06-09 20:46:47');
-INSERT INTO `loginlog` VALUES ('3761', 'Smart_咚咚', '120.194.25.70', '/account/login', '2016-06-17 23:33:45');
 
 -- ----------------------------
 -- Table structure for message
